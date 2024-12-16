@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://c64dp615wbbof"]
+
+[ext_resource type="Script" path="res://Scripts/ProceduralBall.cs" id="1_q48ms"]
+
+[node name="Procedural ball" type="CharacterBody2D" node_paths=PackedStringArray("target")]
+position = Vector2(68, 53)
+script = ExtResource("1_q48ms")
+target = [NodePath("")]
+z = 0.4
+f = 1.5

@@ -1,0 +1,147 @@
+[gd_scene load_steps=20 format=3 uid="uid://7jvr3um8o8pq"]
+
+[ext_resource type="Script" path="res://Scripts/ProceduralBall.cs" id="1_ne7gx"]
+[ext_resource type="Script" path="res://Scripts/CursorBall.cs" id="1_oxu6i"]
+[ext_resource type="Texture2D" uid="uid://cqmsf0bcwoacu" path="res://Animation/playe idel.png" id="3_f2nsj"]
+[ext_resource type="Script" path="res://Scripts/FpsMeter.cs" id="3_jlm2h"]
+[ext_resource type="Texture2D" uid="uid://bb1kpebkfw34e" path="res://Animation/player movemont.png" id="4_yoswk"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b6frh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v5x33"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jlvnh"]
+atlas = ExtResource("3_f2nsj")
+region = Rect2(0, 0, 17, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cmp8p"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ql11r"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j1uj0"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4jog0"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vcl82"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oqylg"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(48, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pmlts"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(0, 96, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mliw6"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(96, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ga2v1"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(48, 48, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_exilw"]
+atlas = ExtResource("4_yoswk")
+region = Rect2(0, 48, 48, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2qumw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jlvnh")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cmp8p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ql11r")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j1uj0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4jog0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vcl82")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oqylg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pmlts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mliw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ga2v1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_exilw")
+}],
+"loop": true,
+"name": &"Walk",
+"speed": 8.0
+}]
+
+[node name="World" type="Node2D"]
+
+[node name="Cursor ball" type="CharacterBody2D" parent="."]
+position = Vector2(165, 57)
+script = ExtResource("1_oxu6i")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Cursor ball"]
+z_index = -1
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_b6frh")
+disabled = true
+one_way_collision_margin = 0.0
+debug_color = Color(1, 1, 1, 1)
+
+[node name="Procedural ball" type="CharacterBody2D" parent="." node_paths=PackedStringArray("target")]
+position = Vector2(233, 58)
+script = ExtResource("1_ne7gx")
+target = [NodePath("../Cursor ball")]
+Z = 0.5
+F = 1.0
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Procedural ball"]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_v5x33")
+disabled = true
+debug_color = Color(0.00876326, 0.821636, 0.999999, 0.764706)
+
+[node name="PlayerAnimation" type="AnimatedSprite2D" parent="Procedural ball"]
+scale = Vector2(3, 3)
+sprite_frames = SubResource("SpriteFrames_2qumw")
+animation = &"Idle"
+autoplay = "Walk"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Control"]
+
+[node name="FPS meter" type="Label" parent="Control/CanvasLayer"]
+offset_right = 40.0
+offset_bottom = 23.0
+script = ExtResource("3_jlm2h")
